@@ -15,18 +15,20 @@ use App\Http\Controllers\DomainController;
 */
 
 $routesDomain = function () {
-    Route::get('/', [DomainController::class, 'index'])->name('index');
-    Route::get('/domain-filename', [DomainController::class, 'domainFilename'])->name('domain-filename');
-    Route::get('/cached-routes', [DomainController::class, 'cachedRoutes'])->name('cached-routes');
-    Route::get('/cached-config', [DomainController::class, 'cachedConfig'])->name('cached-config');
+    Route::get('/', 'index')->name('index');
+    Route::get('/domain-filename', 'domainFilename')->name('domain-filename');
+    Route::get('/cached-routes', 'cachedRoutes')->name('cached-routes');
+    Route::get('/cached-config', 'cachedConfig')->name('cached-config');
 };
 
-Route::domain('site1.test')->name('site1.test.')->group(function () use ($routesDomain) {
-    $routesDomain();
-});
+Route::controller(DomainController::class)
+     ->domain('site1.test')
+     ->name('site1.test.')
+     ->group($routesDomain);
 
-Route::domain('site2.test')->name('site2.test.')->group(function () use ($routesDomain) {
-    $routesDomain();
-});
+Route::controller(DomainController::class)
+     ->domain('site2.test')
+     ->name('site2.test.')
+     ->group($routesDomain);
 
 Route::get('/', [DomainController::class, 'index'])->name('home');
