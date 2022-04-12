@@ -1,4 +1,4 @@
-name: CI - Tests Envs - L8
+name: CI - Tests Envs - L9
 
 on:
     push:
@@ -12,40 +12,10 @@ on:
 
 jobs:
 
-    PHP74_prefer-lowest:
-        runs-on: ubuntu-latest
-
-        name: "Tests - PHP: 7.4 - Laravel: V8 - prefer-lowest"
-
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v2
-
-            - name: Run all job steps
-              uses: ./.github/actions/shared
-              with:
-                  php-version: 7.4
-                  composer-stability: prefer-lowest
-
-    PHP74_prefer-stable:
-        runs-on: ubuntu-latest
-
-        name: "Tests - PHP: 7.4 - Laravel: V8 - prefer-stable"
-
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v2
-
-            - name: Run all job steps
-              uses: ./.github/actions/shared
-              with:
-                  php-version: 7.4
-                  composer-stability: prefer-stable
-
     PHP80_prefer-lowest:
         runs-on: ubuntu-latest
 
-        name: "Tests - PHP: 8.0 - Laravel: V8 - prefer-lowest"
+        name: "Tests - PHP: 8.0 - Laravel: V9.0 - prefer-lowest"
 
         steps:
             - name: Checkout code
@@ -60,9 +30,9 @@ jobs:
     PHP80_prefer-stable:
         runs-on: ubuntu-latest
 
-        # needs: [PHP81_prefer-lowest]
+        # needs: [PHP80_prefer-lowest]
 
-        name: "Tests - PHP: 8.0 - Laravel: V8 - prefer-stable"
+        name: "Tests - PHP: 8.0 - Laravel: V9.0 - prefer-stable"
 
         steps:
             - name: Checkout code
@@ -72,4 +42,38 @@ jobs:
               uses: ./.github/actions/shared
               with:
                   php-version: 8.0
+                  composer-stability: prefer-stable
+
+    PHP81_prefer-lowest:
+        runs-on: ubuntu-latest
+
+        # needs: [PHP80_prefer-stable]
+
+        name: "Tests - PHP: 8.1 - Laravel: V9.0 - prefer-lowest"
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Run all job steps
+              uses: ./.github/actions/shared
+              with:
+                  php-version: 8.1
+                  composer-stability: prefer-lowest
+
+    PHP81_prefer-stable:
+        runs-on: ubuntu-latest
+
+        # needs: [PHP81_prefer-lowest]
+
+        name: "Tests - PHP: 8.1 - Laravel: V9.0 - prefer-stable"
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Run all job steps
+              uses: ./.github/actions/shared
+              with:
+                  php-version: 8.1
                   composer-stability: prefer-stable

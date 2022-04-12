@@ -23,6 +23,7 @@ runs:
           with:
               php-version: ${{ inputs.php-version }}
               extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, mysqli, pdo_mysql, soap, intl, gd, exif, iconv, fileinfo
+              ini-values: error_reporting=E_ALL
               tools: composer:v2
               coverage: none
 
