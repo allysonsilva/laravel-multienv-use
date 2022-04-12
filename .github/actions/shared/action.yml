@@ -1,0 +1,80 @@
+name: 'Common Steps Tests'
+description: 'Actions that are used by all JOBS'
+
+inputs:
+    php-version:
+        description: 'PHP version that will be used as environment'
+        required: true
+    composer-stability:
+        description: 'Composer stability type. It can be "prefer-lowest" or "prefer-stable"'
+        required: true
+        default: 'prefer-stable'
+
+runs:
+    using: "composite"
+    steps:
+
+        - name: Prepare The Environment
+          run: cp .env.example .env
+          shell: bash
+
+        - name: Setup PHP
+          uses: shivammathur/setup-php@v2
+          with:
+              php-version: ${{ inputs.php-version }}
+              extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, mysqli, pdo_mysql, soap, intl, gd, exif, iconv, fileinfo
+              tools: composer:v2
+              coverage: none
+
+        - name: Install Composer Dependencies
+          shell: bash
+          run: |
+              composer update --${{ inputs.composer-stability }} --prefer-dist --no-interaction --ansi --optimize-autoloader
+
+        - name: Generate Application Key
+          run: php artisan key:generate
+          shell: bash
+
+        - name: Upgrade Chrome Driver
+          run: php artisan dusk:chrome-driver `/opt/google/chrome/chrome --version | cut -d " " -f3 | cut -d "." -f1`
+          shell: bash
+
+        - name: Start Chrome Driver
+          run: ./vendor/laravel/dusk/bin/chromedriver-linux &
+          shell: bash
+
+        - name: Add hosts to /etc/hosts
+          shell: bash
+          run: |
+              sudo echo "127.0.0.1 site1.test" | sudo tee -a /etc/hosts
+              sudo echo "127.0.0.1 site2.test" | sudo tee -a /etc/hosts
+              sudo echo "127.0.0.1 env-a.test" | sudo tee -a /etc/hosts
+              sudo echo "127.0.0.1 env-b.test" | sudo tee -a /etc/hosts
+              sudo echo "127.0.0.1 env-c.test" | sudo tee -a /etc/hosts
+
+        - name: Run Laravel Server
+          shell: bash
+          run: |
+              nohup php artisan serve --host=site1.test --port=8010 &
+              nohup php artisan serve --host=site2.test --port=8020 &
+              nohup php artisan serve --host=env-a.test --port=8001 &
+              nohup php artisan serve --host=env-b.test --port=8002 &
+              nohup php artisan serve --host=env-c.test --port=8003 &
+
+        - name: Run Dusk Tests
+          run: php artisan dusk
+          shell: bash
+
+        - name: Upload Dusk Fail Screenshots
+          if: failure()
+          uses: actions/upload-artifact@v2
+          with:
+              name: dusk-screenshots
+              path: tests/Browser/screenshots
+
+        - name: Upload Dusk Console Logs
+          if: failure()
+          uses: actions/upload-artifact@v2
+          with:
+              name: dusk-console
+              path: tests/Browser/console

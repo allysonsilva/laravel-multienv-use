@@ -1,0 +1,75 @@
+name: CI - Tests Envs - L8
+
+on:
+    push:
+        paths:
+            - '**.php'
+    pull_request:
+        paths:
+            - '**.php'
+    schedule:
+        - cron: '0 0 * * *'
+
+jobs:
+
+    PHP74_prefer-lowest:
+        runs-on: ubuntu-latest
+
+        name: "Tests - PHP: 7.4 - Laravel: V8 - prefer-lowest"
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Run all job steps
+              uses: ./.github/actions/shared
+              with:
+                  php-version: 7.4
+                  composer-stability: prefer-lowest
+
+    PHP74_prefer-stable:
+        runs-on: ubuntu-latest
+
+        name: "Tests - PHP: 7.4 - Laravel: V8 - prefer-stable"
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Run all job steps
+              uses: ./.github/actions/shared
+              with:
+                  php-version: 7.4
+                  composer-stability: prefer-stable
+
+    PHP80_prefer-lowest:
+        runs-on: ubuntu-latest
+
+        name: "Tests - PHP: 8.0 - Laravel: V8 - prefer-lowest"
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Run all job steps
+              uses: ./.github/actions/shared
+              with:
+                  php-version: 8.0
+                  composer-stability: prefer-lowest
+
+    PHP80_prefer-stable:
+        runs-on: ubuntu-latest
+
+        # needs: [PHP81_prefer-lowest]
+
+        name: "Tests - PHP: 8.0 - Laravel: V8 - prefer-stable"
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Run all job steps
+              uses: ./.github/actions/shared
+              with:
+                  php-version: 8.0
+                  composer-stability: prefer-stable
