@@ -1,0 +1,8 @@
+ENV_NAME="NAME Env C"
+
+APP_NAME=${ENV_NAME}
+APP_ENV="ENV C"
+APP_DEBUG=true
+APP_URL=http://env-c.test:8003
+
+ENV_NAME_C=.envC

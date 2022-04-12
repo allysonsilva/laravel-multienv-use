@@ -2,10 +2,13 @@
 
 namespace App\Http;
 
+use Allyson\MultiEnv\Concerns\BootstrappersTrait;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
 {
+    use BootstrappersTrait;
+
     /**
      * The application's global HTTP middleware stack.
      *
@@ -16,7 +19,8 @@ class Kernel extends HttpKernel
     protected $middleware = [
         // \App\Http\Middleware\TrustHosts::class,
         \App\Http\Middleware\TrustProxies::class,
-        \Fruitcake\Cors\HandleCors::class,
+        // Removed because of error message: "APP_DEBUG is set to true while APP_ENV is not local"!
+        // \Illuminate\Http\Middleware\HandleCors::class,
         \App\Http\Middleware\PreventRequestsDuringMaintenance::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,

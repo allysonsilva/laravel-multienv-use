@@ -1,0 +1,8 @@
+ENV_NAME="NAME Env A"
+
+APP_NAME=${ENV_NAME}
+APP_ENV="ENV A"
+APP_DEBUG=false
+APP_URL=http://env-a.test:8001
+
+ENV_NAME_A=.envA

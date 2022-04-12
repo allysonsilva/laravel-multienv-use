@@ -3,10 +3,14 @@
 namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
+use Allyson\MultiEnv\Concerns\ConsoleCallTrait;
+use Allyson\MultiEnv\Concerns\BootstrappersTrait;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
+    use BootstrappersTrait, ConsoleCallTrait;
+
     /**
      * Define the application's command schedule.
      *

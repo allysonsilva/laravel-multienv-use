@@ -1,0 +1,15 @@
+{
+   "name":"NAME Env A",
+   "names":{
+      "default":".env",
+      "envA":".envA",
+      "envB":".envB",
+      "envC":".envC"
+   },
+   "app":{
+      "name":"NAME Env A",
+      "env":"ENV A",
+      "debug":false,
+      "url":"http://env-a.test:8001"
+   }
+}

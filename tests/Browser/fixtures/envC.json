@@ -1,0 +1,15 @@
+{
+   "name":"NAME Env C",
+   "names":{
+      "default":".env",
+      "envA":".envA",
+      "envB":".envB",
+      "envC":".envC"
+   },
+   "app":{
+      "name":"NAME Env C",
+      "env":"ENV C",
+      "debug":true,
+      "url":"http://env-c.test:8003"
+   }
+}
