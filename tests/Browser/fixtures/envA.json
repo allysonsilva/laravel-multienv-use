@@ -8,7 +8,6 @@
    },
    "app":{
       "name":"NAME Env A",
-      "env":"ENV A",
       "debug":false,
       "url":"http://env-a.test:8001"
    }

@@ -12,7 +12,6 @@ return [
 
     'app' => [
         'name' => env('APP_NAME'),
-        'env' => env('APP_ENV', 'production'),
         'debug' => env('APP_DEBUG'),
         'url' => env('APP_URL'),
     ],
